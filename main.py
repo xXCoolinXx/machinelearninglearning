@@ -219,7 +219,7 @@ def vectorized_result(i): #Turns a number into a model output
     return v
 
 def mnist_loader():
-    with gzip.open("mnist.pkl.gz", 'rb') as file:
+    with gzip.open("MNIST/mnist.pkl.gz", 'rb') as file:
         tr_d, va_d, te_d = pickle.load(file, encoding="latin1")
 
     #Copied from neuralnetworksanddeeplearning.com
@@ -280,13 +280,13 @@ def main():
     #network.save("mnist_sigmoid_784_100_10_crossentropy_model")
 
     #network = Network.load_from("mnist_sigmoid_784_100_10_model")
-    evaluate_image("2.png", 2, True, network)
-    evaluate_image("0.webp", 0, False, network)
-    evaluate_image("2 better.png", 2, True, network)
-    evaluate_image("5.png", 5, True, network)
-    evaluate_image("9.png", 9, True, network)
-    evaluate_image("9 better.png", 9, True, network)
-    evaluate_image("8.png", 8, True, network)
+    evaluate_image("CollinMNIST/2.png", 2, True, network)
+    evaluate_image("CollinMNIST/0.webp", 0, False, network)
+    evaluate_image("CollinMNIST/2 better.png", 2, True, network)
+    evaluate_image("CollinMNIST/5.png", 5, True, network)
+    evaluate_image("CollinMNIST/9.png", 9, True, network)
+    evaluate_image("CollinMNIST/9 better.png", 9, True, network)
+    evaluate_image("CollinMNIST/8.png", 8, True, network)
 
 
 if __name__ == "__main__":

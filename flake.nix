@@ -45,25 +45,7 @@
         python310Packages.tensorflow-bin
         python310Packages.keras
         python310Packages.pillow
-        #python310Packages.tensorrt 
       ];
     });
-
-    #overlay = final: prev: 
-    #  let 
-    #    inherit(final)
-    #      stdenv lib fetchFromGitHub python311Packages;
-    #  in{
-    #    python311Packages.tensorflow = prev.python311Packages.tensorflow.overrideAttrs(_:{
-    #        src = fetchFromGitHub {
-    #          owner = "tensorflow";
-    #          repo = "tensorflow";
-    #          rev = "refs/tags/v2.12.0";
-    #          hash = "sha256-OYh61/83yv+ycivylfdS8yFUIUAk8euAPvmfjPzldGs=";
-    #        };
-    #        meta.knownVulnerabilities = [];
-    #      });
-    #  }
-    #;
   };
 }

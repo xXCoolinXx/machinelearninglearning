@@ -132,21 +132,20 @@ def evaluate_image(path, actual, inverse, network):
 
 def pretrain():
     #Load the model
-    model = keras.models.load_model("tf_mnist_50epochs_conv_pool_flatten_dense.h5")
+    model = keras.models.load_model("Tensorflow_Models/tf_mnist_50epochs_conv_pool_flatten_dense.h5")
     
     #load mnist
     x_train, y_train, x_val, y_val, x_test, y_test = load_mnist()
+    
+    model.evaluate(x_test, y_test)
 
-    print(y_test.shape)
-    #model.evaluate(x_test, y_test)
-
-    evaluate_image("2.png", 2, True, model)
-    evaluate_image("0.webp", 0, False, model)
-    evaluate_image("2 better.png", 2, True, model)
-    evaluate_image("5.png", 5, True, model)
-    evaluate_image("9.png", 9, True, model)
-    evaluate_image("9 better.png", 9, True, model)
-    evaluate_image("8.png", 8, True, model)
+    evaluate_image("CollinMNIST/2.png", 2, True, model)
+    evaluate_image("CollinMNIST/0.webp", 0, False, model)
+    evaluate_image("CollinMNIST/2 better.png", 2, True, model)
+    evaluate_image("CollinMNIST/5.png", 5, True, model)
+    evaluate_image("CollinMNIST/9.png", 9, True, model)
+    evaluate_image("CollinMNIST/9 better.png", 9, True, model)
+    evaluate_image("CollinMNIST/8.png", 8, True, model)
     
 
 def main():
