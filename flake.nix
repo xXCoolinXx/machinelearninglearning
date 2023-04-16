@@ -1,10 +1,8 @@
 {
-  description = "Quantum Chess";
+  description = "Machine Learning Learning";
   
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
-    
   };
 
   outputs = { self, nixpkgs}: 
@@ -27,16 +25,14 @@
     );
   in 
   {
-    #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-    #packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
+    #Nix build stuff
     packages = forAllSystems (system:
     let pkgs = nixpkgsFor."${system}";
     in rec {
       ml = pkgs.ml;
     });
-
+    
+    #Create a shell environment with the correct libraries
     devShell = forAllSystems (system:
     let pkgs = nixpkgsFor."${system}";
     in pkgs.mkShell {
