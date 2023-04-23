@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 from PIL import Image
+import datetime
 
 def expand_tensor(t): #Takes a 4-Tensor 
     def roll(shift):
@@ -39,15 +40,17 @@ def load_mnist():
     return x_train, y_train, x_val, y_val, x_test, y_test
 
 def train():
-    batch_size = 100
+    batch_size = 50
 
     x_train, y_train, x_val, y_val, x_test, y_test = load_mnist()
+
+    log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
     callbacks = [
         keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=1e-4,patience=10),
         #slow learning rate if model does not improve
         keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=1e-5),
-
+        tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
     ]
 
     model = keras.Sequential(layers=[
@@ -61,16 +64,19 @@ def train():
 
     #Train model on training_data and report back using the validation data
     #Use the log likelihood cost function and the SGD optimizer
-    model.compile(loss="categorical_crossentropy", optimizer="sgd", metrics=["accuracy"])
-    
+    model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+
     model.fit(x=x_train, y=y_train, validation_data=(x_val, y_val), epochs=50,\
          batch_size=batch_size, verbose=1, callbacks=callbacks)
+
+    
+
 
     #model.evaluate(test_data[0], test_data[1], batch_size=batch_size)
     model.summary()
 
     #save model
-    model.save("tf_mnist_50epochs_conv_pool_flatten_dense.h5")
+    #model.save("tf_mnist_50epochs_conv_pool_flatten_dense_adam.h5")
 
     #TODO: Add callback to slow learning rate, increase epoch size
     #TODO: Test images, save model as well
@@ -149,8 +155,8 @@ def pretrain():
     
 
 def main():
-    #train()
-    pretrain()
+    train()
+    #pretrain()
 
 if __name__ == "__main__":
     main()

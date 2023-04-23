@@ -41,6 +41,11 @@
         python310Packages.tensorflow-bin
         python310Packages.keras
         python310Packages.pillow
+        python310Packages.torch
+        python310Packages.transformers
+        python310Packages.chess
+        python310Packages.tqdm
+        stockfish
       ];
     });
   };
