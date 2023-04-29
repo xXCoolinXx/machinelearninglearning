@@ -44,7 +44,7 @@ def train():
 
     x_train, y_train, x_val, y_val, x_test, y_test = load_mnist()
 
-    log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    log_dir = "logs/mnist/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
     callbacks = [
         keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=1e-4,patience=10),
@@ -55,7 +55,7 @@ def train():
 
     model = keras.Sequential(layers=[
 
-        keras.layers.Convolution2D(5, 6, activation="relu", input_shape=(28,28,1)),
+        keras.layers.Convolution2D(5, 6, activation="gelu", input_shape=(28,28,1)),
         #keras.layers.Convolution2D(4, (5,5), activation="relu"),
         keras.layers.MaxPooling2D(pool_size=(2, 2), strides=1),
         keras.layers.Flatten(),
@@ -101,22 +101,6 @@ def evaluate_image(path, actual, inverse, network):
         #convert to tensor instead 
         arr = np.array(img)
         arr = arr.reshape((1, 28, 28, 1)).astype('float32') / 255.0
-        #reshape arr using tensorflow
-        #arr = tf.reshape(arr, (1, 28, 28, 1))#.astype('float32') / 255.0
-        #ensure tensor dtype is float32 and normalize by / 255.0
-        #arr = tf.cast(arr, tf.float32) / 255.0
-
-        #print (arr)
-        # Normalize the pixel values to be between 0 and 1
-        #arr = arr.
-
-        # Flatten the array into a 1D array of length 784 (28*28)
-        #arr = arr.flatten()
-        #arr = np.reshape(arr, (784,1))
-        #arr.transpose()
-        #print (arr.shape)
-        # Reshape the flattened array back into a 28x28 matrix
-        #arr = arr.reshape((28, 28))
 
         # Invert the pixel values (if needed)
         if inverse:
@@ -128,13 +112,9 @@ def evaluate_image(path, actual, inverse, network):
             if i == actual:
                 add_str = "*"
             print(f'{i}{add_str}\t{element:.6f}')
-
-        #print(arr.shape, vectorized_result(actual).shape)
         network.evaluate(arr, vectorized_result(actual))
-        #print(network.predict(arr))
             
         print("\n")
-        #print(network.feed_forward(arr))
 
 def pretrain():
     #Load the model
